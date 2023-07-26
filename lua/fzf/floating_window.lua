@@ -29,4 +29,14 @@ function M.create(opts)
   return bufnr, winid
 end
 
+function M.close(bufnr, winid)
+  if vim.api.nvim_win_is_valid(winid) then
+    vim.api.nvim_win_close(winid, {force=true})
+  end
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    vim.api.nvim_buf_delete(bufnr, {force=true})
+  end
+  return nil
+end
+
 return M

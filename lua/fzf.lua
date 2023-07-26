@@ -288,7 +288,7 @@ function FZF.raw_fzf(contents, fzf_cli_args, user_options)
   local fzf_obj = FZFObject:new(contents, fzf_cli_args, user_options, function(ret, exit_code)
     coroutine.resume(co, ret, exit_code)
   end)
-  
+
   fzf_obj:run()
   return coroutine.yield()
 end
@@ -312,12 +312,8 @@ function FZF.fzf(contents, fzf_cli_args, options)
   local bufnr, winid = float.create(opts)
 
   local results, exit_code  = FZF.raw_fzf(contents, fzf_cli_args, options)
-  if vim.api.nvim_win_is_valid(winid) then
-    vim.api.nvim_win_close(winid, {force=true})
-  end
-  if vim.api.nvim_buf_is_valid(bufnr) then
-    vim.api.nvim_buf_delete(bufnr, {force=true})
-  end
+
+  float.close(bufnr, winid)
   if vim.api.nvim_win_is_valid(win) then
     vim.api.nvim_set_current_win(win)
   end
