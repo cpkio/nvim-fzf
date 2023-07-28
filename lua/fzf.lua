@@ -78,6 +78,8 @@ local function get_temporary_pipe_name()
   if is_windows then
     local random_filename = string.gsub(vim.fn.tempname(), "/", "")
     random_filename = string.gsub(random_filename, "\\", "")
+    random_filename = string.gsub(random_filename, ":", "")
+    random_filename = string.gsub(random_filename, "%.", "")
     return ([[\\.\pipe\%s]]):format(random_filename)
   else
     return vim.fn.tempname()
