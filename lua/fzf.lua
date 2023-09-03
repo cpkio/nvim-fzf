@@ -200,7 +200,7 @@ function FZFObject:run()
   local termopen_first_arg
 
   if is_windows then
-    termopen_first_arg = self.command
+    termopen_first_arg = { "cmd", "/d", "/e:off", "/f:off", "/v:off", "/c", self.command }
   else
     -- for performance reasons, run this command in `sh`. This is because the
     -- default shells of some users take a long time to launch, and this
